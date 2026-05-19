@@ -121,16 +121,16 @@ function App() {
       try {
         const headers = { 'Content-Type': 'application/json' };
 
-        const statsRes = await fetch(`http://localhost:8081/api/player_statistics?userId=${activeViewId}`, { headers });
+        const statsRes = await fetch(`https://eliteball-backend-ltan.onrender.com/api/player_statistics?userId=${activeViewId}`, { headers });
         if (statsRes.ok) setStatsData(await statsRes.json());
 
-        const drillsRes = await fetch(`http://localhost:8081/api/drills`, { headers });
+        const drillsRes = await fetch(`https://eliteball-backend-ltan.onrender.com/api/drills`, { headers });
         if (drillsRes.ok) setDrillsData(await drillsRes.json());
 
-        const physRes = await fetch(`http://localhost:8081/api/physical_performance?userId=${activeViewId}`, { headers });
+        const physRes = await fetch(`https://eliteball-backend-ltan.onrender.com/api/physical_performance?userId=${activeViewId}`, { headers });
         if (physRes.ok) setPhysicalData(await physRes.json());
 
-        const nutrRes = await fetch(`http://localhost:8081/api/nutrition?userId=${activeViewId}`, { headers });
+        const nutrRes = await fetch(`https://eliteball-backend-ltan.onrender.com/api/nutrition?userId=${activeViewId}`, { headers });
         if (nutrRes.ok) setNutritionData(await nutrRes.json());
 
       } catch (err) {
@@ -197,14 +197,14 @@ function App() {
 
       finalCleanData.userId = activeViewId;
 
-      const response = await fetch(`http://localhost:8081/api/${endpoint}`, {
+      const response = await fetch(`https://eliteball-backend-ltan.onrender.com/api/${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(finalCleanData)
       });
       
       if (response.ok) {
-        const reload = await fetch(`http://localhost:8081/api/${endpoint}?userId=${activeViewId}`);
+        const reload = await fetch(`https://eliteball-backend-ltan.onrender.com/api/${endpoint}?userId=${activeViewId}`);
         if (reload.ok) {
           const d = await reload.json();
           if (type === 'stats') setStatsData(d);
@@ -224,9 +224,9 @@ function App() {
   const handleDataDelete = async (id, type, endpoint) => {
     if (!window.confirm("Are you absolutely sure you want to permanently erase this record?")) return;
     try {
-      const response = await fetch(`http://localhost:8081/api/${endpoint}/${id}`, { method: 'DELETE' });
+      const response = await fetch(`https://eliteball-backend-ltan.onrender.com/api/${endpoint}/${id}`, { method: 'DELETE' });
       if (response.ok) {
-        const reload = await fetch(`http://localhost:8081/api/${endpoint}?userId=${activeViewId}`);
+        const reload = await fetch(`https://eliteball-backend-ltan.onrender.com/api/${endpoint}?userId=${activeViewId}`);
         if (reload.ok) {
           const d = await reload.json();
           if (type === 'stats') setStatsData(d);
@@ -248,13 +248,13 @@ function App() {
     let bodyData = {};
 
     if (mode === 'login') {
-      endpoint = 'http://localhost:8081/api/auth/login';
+      endpoint = 'https://eliteball-backend-ltan.onrender.com/api/auth/login';
       bodyData = { email, password };
     } else if (mode === 'register') {
-      endpoint = 'http://localhost:8081/api/auth/register';
+      endpoint = 'https://eliteball-backend-ltan.onrender.com/api/auth/register';
       bodyData = { email, passwordHash: password, fullName, role: 'PLAYER', birthDate };
     } else if (mode === 'verify') {
-      endpoint = 'http://localhost:8081/api/auth/verify';
+      endpoint = 'https://eliteball-backend-ltan.onrender.com/api/auth/verify';
       bodyData = { email, code: otpCode };
     }
 
@@ -545,7 +545,6 @@ function App() {
             </>
           )}
 
-          {/* TAB 3: SKILLS & DRILLS VIEW */}
           {activeTab === 'Skills & Drills' && (
             <>
               <div style={{ marginBottom: '35px' }}>
@@ -580,7 +579,6 @@ function App() {
             </>
           )}
 
-          {/* TAB 4: PHYSICAL PERFORMANCE PANEL */}
           {activeTab === 'Physical Performance' && (
             <>
               <div style={{ marginBottom: '35px' }}>
@@ -636,7 +634,6 @@ function App() {
             </>
           )}
 
-          {/* TAB 5: NUTRITION & RECOVERY MODULE */}
           {activeTab === 'Nutrition & Recovery' && (
             <>
               <div style={{ marginBottom: '35px' }}>
@@ -647,7 +644,6 @@ function App() {
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '16px', marginBottom: '35px' }}>
                 <div style={{ backgroundColor: '#090d16', border: '1px solid #141d30', padding: '20px', borderRadius: '12px' }}><span style={{ color: '#64748b', fontSize: '0.8rem' }}>TODAY'S MEALS</span><h3 style={{ fontSize: '1.1rem', margin: '8px 0', color: '#94a3b8', fontWeight: '600' }}>{nutritionData[0]?.meals || '--'}</h3></div>
                 
-                {/* 🚨 REPARAT: AICI S-A REVOLZAT TYPO-UL DE SINTAXA DIN VERSIUNEA ANTERIOARA! */}
                 <div style={{ backgroundColor: '#090d16', border: '1px solid #141d30', padding: '20px', borderRadius: '12px' }}><span style={{ color: '#64748b', fontSize: '0.8rem' }}>HYDRATION</span><h3 style={{ fontSize: '1.8rem', margin: '5px 0' }}>{nutritionData[0]?.water || '--'} L</h3></div>
                 
                 <div style={{ backgroundColor: '#090d16', border: '1px solid #141d30', padding: '20px', borderRadius: '12px' }}><span style={{ color: '#64748b', fontSize: '0.8rem' }}>SLEEP</span><h3 style={{ fontSize: '1.8rem', margin: '5px 0' }}>{nutritionData[0]?.sleep || '--'} h</h3></div>
@@ -689,7 +685,6 @@ function App() {
             </>
           )}
 
-          {/* TAB 6: ADMIN SUITE PROXY OVERRIDE CONTROLLER HUB */}
           {activeTab === 'ADMIN' && isRoleAdmin && (
             <div style={{ backgroundColor: '#090d16', border: '1px solid #141d30', padding: '30px', borderRadius: '16px' }}>
               <h2 style={{ fontFamily: '"Barlow Condensed", sans-serif', fontSize: '2.2rem', fontWeight: '900', color: '#e65c00', margin: '0 0 6px 0', textTransform: 'uppercase' }}>Administrative Override Control</h2>
