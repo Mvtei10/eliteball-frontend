@@ -251,9 +251,16 @@ function App() {
       endpoint = 'https://eliteball-backend-ltan.onrender.com/api/auth/login';
       bodyData = { email, password };
     } else if (mode === 'register') {
-      endpoint = 'https://eliteball-backend-ltan.onrender.com/api/auth/register';
-      bodyData = { email, password, fullName, role: 'PLAYER', birthDate };
-    } else if (mode === 'verify') {
+  endpoint = 'https://eliteball-backend-ltan.onrender.com/api/auth/register';
+  bodyData = { 
+    id: null,
+    email: email.trim(), 
+    password: password, 
+    fullName: fullName.trim(), 
+    role: 'PLAYER', 
+    birthDate: birthDate ? birthDate : null
+  };
+} else if (mode === 'verify') {
       endpoint = 'https://eliteball-backend-ltan.onrender.com/api/auth/verify';
       bodyData = { email, code: otpCode };
     }
