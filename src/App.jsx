@@ -252,7 +252,7 @@ function App() {
       bodyData = { email, password };
     } else if (mode === 'register') {
       endpoint = 'https://eliteball-backend-ltan.onrender.com/api/auth/register';
-      bodyData = { email, passwordHash: password, fullName, role: 'PLAYER', birthDate };
+      bodyData = { email, password, fullName, role: 'PLAYER', birthDate };
     } else if (mode === 'verify') {
       endpoint = 'https://eliteball-backend-ltan.onrender.com/api/auth/verify';
       bodyData = { email, code: otpCode };
